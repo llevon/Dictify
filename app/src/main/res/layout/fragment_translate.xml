@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_blue"
-    tools:context=".TranslateActivity">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_label"
@@ -40,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Source Language :"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
@@ -61,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Target Language :"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
@@ -72,6 +70,7 @@
         android:id="@+id/target_language_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="@+id/tvTargetLanguage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvTargetLanguage"
@@ -130,11 +129,10 @@
             android:id="@+id/tv_translated_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textIsSelectable="true"
             tools:layout_editor_absoluteX="20dp" />
-
     </ScrollView>
 
     <ProgressBar

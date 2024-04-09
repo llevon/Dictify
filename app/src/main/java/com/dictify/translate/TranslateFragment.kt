@@ -1,10 +1,7 @@
-package com.dictify
-
+package com.dictify.translate
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
@@ -12,40 +9,51 @@ import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.dictify.databinding.ActivityTranslateBinding
-import com.google.android.material.color.ColorContrast
+import androidx.fragment.app.Fragment
+import com.dictify.Language
+import com.dictify.LanguageAdapter
+import com.dictify.databinding.FragmentHomeBinding
+import com.dictify.databinding.FragmentTranslateBinding
+import com.dictify.getLanguageList
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import java.util.Locale
 
-class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
-    private lateinit var binding: ActivityTranslateBinding
+class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
+
+    private var _binding: FragmentTranslateBinding? = null
+    private val binding: FragmentTranslateBinding
+        get() = _binding ?: throw Exception("Binding is null")
     private  var sourceLanguage: String? = null
     private  var targetLanguage: String? = null
     private lateinit var textToSpeech: TextToSpeech
     private lateinit var  recognitionIntent: Intent
     private var isListening = false
 
-
-
     private val speechRecognizer: SpeechRecognizer by lazy {
-        SpeechRecognizer.createSpeechRecognizer(this)
+        SpeechRecognizer.createSpeechRecognizer(requireContext())
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTranslateBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityTranslateBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
     }
-
     private fun init(){
         setupLanguageOptions()
         setupAudio()
@@ -67,7 +75,7 @@ class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
     private fun setupLanguageOptions() {
         binding.apply {
             val languageList = getLanguageList()
-            val adapter = LanguageAdapter(this@TranslateActivity, languageList)
+            val adapter = LanguageAdapter(requireContext(), languageList)
             sourceLanguageSpinner.adapter = adapter
             sourceSpinnerListener(sourceLanguageSpinner, adapter)
             targetLanguageSpinner.adapter = adapter
@@ -76,7 +84,7 @@ class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
     }
 
     private fun setupAudio() {
-        textToSpeech = TextToSpeech(this, this)
+        textToSpeech = TextToSpeech(requireContext(), this)
         binding.tvTranslatedText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -117,8 +125,8 @@ class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
     fun translate(inputText:String){
         if(inputText.isNotEmpty() && sourceLanguage != null && targetLanguage != null) {
             val options = TranslatorOptions.Builder()
-                .setSourceLanguage(sourceLanguage?:TranslateLanguage.ENGLISH)
-                .setTargetLanguage(targetLanguage?:TranslateLanguage.ENGLISH)
+                .setSourceLanguage(sourceLanguage?: TranslateLanguage.ENGLISH)
+                .setTargetLanguage(targetLanguage?: TranslateLanguage.ENGLISH)
                 .build()
             val translator = Translation.getClient(options)
             var conditions = DownloadConditions.Builder()
@@ -154,7 +162,7 @@ class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
             ) {
                 val selectedLanguage = adapter.getItem(position)
                 selectedLanguage?.let {
-                   sourceLanguage = it.code
+                    sourceLanguage = it.code
                 }
             }
 
@@ -247,13 +255,16 @@ class TranslateActivity : AppCompatActivity() , TextToSpeech.OnInitListener {
 
         override fun afterTextChanged(s: Editable?) {
             // This method is called to notify you that the characters within s have been changed
-            if(s.toString().isNotEmpty()) {
+            if (s.toString().isNotEmpty()) {
                 translate(s.toString())
-            }
-            else{
+            } else {
                 binding.tvTranslatedText.text = ""
             }
             // Do something with the entered text
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

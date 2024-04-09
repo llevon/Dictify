@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TranslateActivity">
+        <activity android:name=".translate.TranslateActivity">
 
         </activity>
         <meta-data

@@ -10,10 +10,11 @@ class LanguageAdapter(context: Context, private val languages: List<Language>) :
     ArrayAdapter<Language>(context, android.R.layout.simple_spinner_item, languages) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getView(position, convertView, parent)
+        val view = super.getView(position, convertView, parent) as TextView
+        view.setTextColor(context.resources.getColor(R.color.black))
         val currentItem = getItem(position)
         currentItem?.let {
-            // Customize the view if needed
+            // Customize
             (view.findViewById<TextView>(android.R.id.text1)).text = it.name
         }
         return view
@@ -23,7 +24,7 @@ class LanguageAdapter(context: Context, private val languages: List<Language>) :
         val view = super.getDropDownView(position, convertView, parent)
         val currentItem = getItem(position)
         currentItem?.let {
-            // Customize the dropdown view if needed
+            // Customize
             (view.findViewById<TextView>(android.R.id.text1)).text = "${it.name} (${it.code})"
         }
         return view

@@ -44,6 +44,10 @@ dependencies {
     //splash screen
     implementation ("androidx.core:core-splashscreen:1.0.1")
 
+    // navigation
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+
     /*implementation("com.google.mlkit:language-id:17.0.5")
     implementation ("com.google.android.gms:play-services-mlkit-language-id:17.0.0")
     implementation ("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
