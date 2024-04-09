@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Dictify</string>
+    <string name="welcome_text">Welcome to Dictify</string>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1005414743593",
+    "project_id": "dictify-cc073",
+    "storage_bucket": "dictify-cc073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005414743593:android:7d061b764e8d40062a6638",
+        "android_client_info": {
+          "package_name": "com.dictify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6MhccAFqz1dpUr7pbFbZLu6fkiTx_tS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
