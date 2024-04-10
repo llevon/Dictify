@@ -1,6 +1,5 @@
 package com.dictify.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +26,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        viewPagerSetup()
     }
-    private fun init(){
+
+    private fun viewPagerSetup() {
+        val viewPager = binding.viewPager
+        val adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+        adapter.startAutoRotation(viewPager, 2500)
+
+    }
+
+    private fun init() {
         binding.btnTranslate.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_mainFragment)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
