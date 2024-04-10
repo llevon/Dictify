@@ -11,12 +11,12 @@
         android:name="com.dictify.home.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_translateFragment"
-            app:destination="@id/translateFragment" />
+            android:id="@+id/action_homeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_translate"
-        android:id="@+id/translateFragment"
-        android:name="com.dictify.translate.TranslateFragment"
-        android:label="TranslateFragment" />
+        android:id="@+id/mainFragment"
+        android:name="com.dictify.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main"/>
 </navigation>

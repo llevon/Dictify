@@ -11,7 +11,6 @@ import com.dictify.R
 import com.dictify.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = _binding ?: throw Exception("Binding is null")
@@ -31,7 +30,7 @@ class HomeFragment : Fragment() {
     }
     private fun init(){
         binding.btnTranslate.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_translateFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_mainFragment)
         }
     }
     override fun onDestroyView() {
