@@ -33,8 +33,9 @@ class HomeFragment : Fragment() {
         val viewPager = binding.viewPager
         val adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
         viewPager.adapter = adapter
-        adapter.startAutoRotation(viewPager, 2500)
+        binding.inIndicator.setViewPager(viewPager)
 
+        adapter.startAutoRotation(viewPager, 2500)
     }
 
     private fun init() {

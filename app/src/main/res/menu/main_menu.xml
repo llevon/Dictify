@@ -5,7 +5,7 @@
     android:icon="@drawable/ic_notes"/>
 <item android:title="Add"
     android:id="@id/translateFragment"
-    android:icon="@drawable/ic_add"/>
+    android:icon="@drawable/ic_profile"/>
 <item android:title="Profile"
     android:id="@id/profileFragment"
     android:icon="@drawable/ic_profile"/>

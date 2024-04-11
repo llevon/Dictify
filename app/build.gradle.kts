@@ -42,11 +42,12 @@ android {
 
 dependencies {
     //splash screen
-    implementation ("androidx.core:core-splashscreen:1.0.1")
-
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    //circular indicator
+    implementation ("me.relex:circleindicator:2.1.6")
     // navigation
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     /*implementation("com.google.mlkit:language-id:17.0.5")
     implementation ("com.google.android.gms:play-services-mlkit-language-id:17.0.0")
@@ -55,9 +56,9 @@ dependencies {
     implementation ("com.google.android.gms:play-services-mlkit-image-labeling:16.0.8")
     implementation ("com.google.firebase:firebase-ml-natural-language:26.6.0")*/
 
-    implementation ("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
-    implementation ("com.google.mlkit:translate:17.0.2")
-    implementation ("com.google.android.gms:play-services-mlkit-image-labeling:16.0.8")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+    implementation("com.google.mlkit:translate:17.0.2")
+    implementation("com.google.android.gms:play-services-mlkit-image-labeling:16.0.8")
     implementation(platform(libs.firebase.bom))
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-analytics")

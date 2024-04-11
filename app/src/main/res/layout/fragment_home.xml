@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/app_green"
         android:paddingVertical="15dp"
-        android:text="Translate"
+        android:text="Lets go"
         android:textColor="@color/white"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,6 +33,17 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         />
-    />
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/in_indicator"
+        android:padding="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular_shape"
+        android:layout_marginBottom="216dp"
+        app:circularflow_radiusInDP="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
