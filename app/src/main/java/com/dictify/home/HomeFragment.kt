@@ -29,9 +29,9 @@ class HomeFragment : Fragment() {
         viewPagerSetup()
     }
 
-    private fun viewPagerSetup() {
+     private fun viewPagerSetup() {
         val viewPager = binding.viewPager
-        val adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
         binding.inIndicator.setViewPager(viewPager)
 
@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
     private fun init() {
         binding.btnTranslate.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_translateFragment2)
         }
     }
 

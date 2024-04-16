@@ -1,4 +1,5 @@
 package com.dictify.translate
+
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,10 +16,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dictify.Language
 import com.dictify.LanguageAdapter
-import com.dictify.databinding.FragmentHomeBinding
 import com.dictify.databinding.FragmentTranslateBinding
 import com.dictify.getLanguageList
 import com.google.mlkit.common.model.DownloadConditions
@@ -32,15 +33,16 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
     private var _binding: FragmentTranslateBinding? = null
     private val binding: FragmentTranslateBinding
         get() = _binding ?: throw Exception("Binding is null")
-    private  var sourceLanguage: String? = null
-    private  var targetLanguage: String? = null
+
+    private var sourceLanguage: String? = null
+    private var targetLanguage: String? = null
     private lateinit var textToSpeech: TextToSpeech
-    private lateinit var  recognitionIntent: Intent
-    private var isListening = false
+    private lateinit var recognitionIntent: Intent
 
     private val speechRecognizer: SpeechRecognizer by lazy {
         SpeechRecognizer.createSpeechRecognizer(requireContext())
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,22 +56,47 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-    private fun init(){
+
+    private fun init() {
         setupLanguageOptions()
-        setupAudio()
         binding.apply {
+
             btnSpeak.setOnClickListener {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 1)
                 setupSpeechRecognizer()
                 startListening()
             }
 
-            btnTranslate.setOnClickListener {
-                translate(etInputText.text.toString())
+            btnSwap.setOnClickListener {
+                swapSpinners()
             }
 
-            etInputText.addTextChangedListener(inputTextChangeListener)
+            btnVoiceover.setOnClickListener {
+                speakText(tvTranslatedText.text.toString())
+            }
+
+            btnTranslate.setOnClickListener {
+                translate(etInputText.text.toString())
+                setupAudio()
+                etInputText.addTextChangedListener(inputTextChangeListener)
+            }
+
+
         }
+    }
+
+    private fun swapSpinners() {
+        val parent = binding.sourceLanguageSpinner.parent as ViewGroup
+        val sourceIndex = parent.indexOfChild(binding.sourceLanguageSpinner)
+        val targetIndex = parent.indexOfChild(binding.targetLanguageSpinner)
+
+        // Remove both spinners from the parent view
+        parent.removeView(binding.sourceLanguageSpinner)
+        parent.removeView(binding.targetLanguageSpinner)
+
+        // Add them back to the parent view at swapped positions
+        parent.addView(binding.sourceLanguageSpinner, targetIndex)
+        parent.addView(binding.targetLanguageSpinner, sourceIndex)
     }
 
     private fun setupLanguageOptions() {
@@ -85,7 +112,9 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private fun setupAudio() {
         textToSpeech = TextToSpeech(requireContext(), this)
-        binding.tvTranslatedText.addTextChangedListener(object : TextWatcher {
+        binding.tvTranslatedText.addTextChangedListener(object :
+            TextWatcher {
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -93,24 +122,31 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                speakText(s.toString())
+                //speakText(s.toString())
             }
-        })
+        }
+        )
     }
 
     private fun setupSpeechRecognizer() {
         speechRecognizer.setRecognitionListener(speechRecognitionListener)
         recognitionIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         val supportedLanguages = arrayOf(sourceLanguage)
-        recognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, supportedLanguages.joinToString(","))
-        recognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        recognitionIntent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE,
+            supportedLanguages.joinToString(",")
+        )
+        recognitionIntent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
 
     }
 
     private fun startListening() {
         try {
             binding.btnSpeak.apply {
-                setText("Listening...")
+                text = "Listening..."
                 isEnabled = false
             }
             speechRecognizer.startListening(recognitionIntent)
@@ -122,11 +158,12 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
             }
         }
     }
-    fun translate(inputText:String){
-        if(inputText.isNotEmpty() && sourceLanguage != null && targetLanguage != null) {
+
+    fun translate(inputText: String) {
+        if (inputText.isNotEmpty() && sourceLanguage != null && targetLanguage != null) {
             val options = TranslatorOptions.Builder()
-                .setSourceLanguage(sourceLanguage?: TranslateLanguage.ENGLISH)
-                .setTargetLanguage(targetLanguage?: TranslateLanguage.ENGLISH)
+                .setSourceLanguage(sourceLanguage ?: TranslateLanguage.ENGLISH)
+                .setTargetLanguage(targetLanguage ?: TranslateLanguage.ENGLISH)
                 .build()
             val translator = Translation.getClient(options)
             var conditions = DownloadConditions.Builder()
@@ -142,7 +179,6 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
                         .addOnFailureListener { exception ->
                             binding.progressBar.visibility = View.GONE
                             binding.tvTranslatedText.text = exception.message.toString()
-
                         }
                 }
                 .addOnFailureListener { exception ->
@@ -151,8 +187,14 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
                 }
         }
 
+        else{
+                val speakToast = Toast.makeText(requireActivity(), "Your entered text field is empty", Toast.LENGTH_SHORT)
+                speakToast.show()
+        }
+
     }
-    fun sourceSpinnerListener(spinner: Spinner, adapter: ArrayAdapter<Language>){
+
+    fun sourceSpinnerListener(spinner: Spinner, adapter: ArrayAdapter<Language>) {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -171,7 +213,7 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
         }
     }
 
-    fun targetSpinnerListener(spinner: Spinner, adapter: ArrayAdapter<Language>){
+    fun targetSpinnerListener(spinner: Spinner, adapter: ArrayAdapter<Language>) {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -207,6 +249,11 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
     }
 
     private fun speakText(text: String) {
+        if (text == "") {
+            val speakToast = Toast.makeText(requireActivity(), "Your text field is empty", Toast.LENGTH_SHORT)
+            speakToast.show()
+        }
+        else
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
@@ -244,7 +291,7 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
         override fun onEvent(eventType: Int, params: Bundle?) {}
     }
 
-    val inputTextChangeListener = object : TextWatcher {
+    private val inputTextChangeListener = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             // This method is called to notify you that characters within s are about to be replaced with new text with a length of after
         }
@@ -263,6 +310,7 @@ class TranslateFragment : Fragment(), TextToSpeech.OnInitListener {
             // Do something with the entered text
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_homeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_translateFragment2"
+            app:destination="@id/translateFragment2"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.dictify.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main"/>
+    <fragment
+        tools:layout="@layout/fragment_translate"
+        android:id="@+id/translateFragment2"
+        android:name="com.dictify.translate.TranslateFragment"
+        android:label="TranslateFragment" />
 </navigation>
