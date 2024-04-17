@@ -89,7 +89,6 @@ class TTSFragment: Fragment(), TextToSpeech.OnInitListener {
         binding.etInputText.setText(text)
         binding.etInputText.addTextChangedListener(inputTextChangeListener)
         translate(text ?: "")
-
     }
 
     private fun shareText(content: String) {
