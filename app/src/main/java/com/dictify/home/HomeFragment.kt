@@ -34,13 +34,15 @@ class HomeFragment : Fragment() {
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
         binding.inIndicator.setViewPager(viewPager)
-
         adapter.startAutoRotation(viewPager, 2500)
     }
 
     private fun init() {
         binding.btnTranslate.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_translateFragment2)
+        }
+        binding.btnSpeechToText.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_TTSFragment)
         }
     }
 

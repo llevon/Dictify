@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dictify.databinding.FragmentNotesBinding
-import com.dictify.databinding.FragmentProfileBinding
 
 class NotesFragment: Fragment() {
     private var _binding: FragmentNotesBinding? = null

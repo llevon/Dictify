@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Globe -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M12,2c4.411,0 8,3.589 8,8c0,4.411 -3.589,8 -8,8c-4.411,0 -8,-3.589 -8,-8c0,-4.411 3.589,-8 8,-8Zm0,14.5c2.209,0 4,-1.791 4,-4c0,-2.209 -1.791,-4 -4,-4c-2.209,0 -4,1.791 -4,4c0,2.209 1.791,4 4,4Z"/>
+
+    <!-- Arrows -->
+    <path
+        android:fillColor="#8BC34A"
+        android:pathData="M12.758,6.095l-0.758,1.303l-0.758,-1.303l-1.303,0.758l1.303,0.758l-1.303,0.758l0.758,1.303l0.758,-1.303l1.303,0.758l-1.303,-0.758l1.303,-0.758zM16.5,12l-5,-5v3h-8v4h8v3z"/>
+
+</vector>

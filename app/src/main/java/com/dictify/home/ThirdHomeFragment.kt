@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dictify.databinding.FragmentHomeThirdBinding
-import com.dictify.databinding.FragmentProfileBinding
 
 class ThirdHomeFragment: Fragment() {
     private var _binding: FragmentHomeThirdBinding? = null
